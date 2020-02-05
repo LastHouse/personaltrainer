@@ -1,24 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
 import './App.css';
+import CustomerList from './components/CustomerList';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <AppBar position="static">
+        <Toolbar
+          style={{
+            backgroundColor: '#d3d3d3',
+            color: 'black',
+            textAlign: 'right',
+            justifyContent: 'center'
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          <Typography variant="h5">Do You Like to Train?</Typography>
+        </Toolbar>
+      </AppBar>
+      <CustomerList />
     </div>
   );
 }
