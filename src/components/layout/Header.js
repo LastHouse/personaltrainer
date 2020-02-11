@@ -14,8 +14,9 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
-import AddCustomer from './actions/AddCustomer';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import AddCustomer from '../actions/AddCustomer';
+
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -71,58 +72,66 @@ export default function Header() {
 
   const onItemClick = title => () => {
     setTitle(title);
-    setDrawer(variant === 'temporary' ? false : drawer);
-    setDrawer(!drawer);
   };
 
   const sideList = side => (
-    <Router>
-      <div
-        className={classes.list}
-        role="presentation"
-        onClick={toggleDrawer(side, false)}
-        onKeyDown={toggleDrawer(side, false)}
-      >
-        <List>
-          {['Customers', '?', 'Calendar', 'Statistics'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? (
-                  <DirectionsRunIcon />
-                ) : (
-                  <DirectionsRunIcon />
-                )}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-
-          <ListItem
-            button
-            component={Link}
-            to="/"
-            onClick={onItemClick('Home')}
-          >
-            <ListItemText>Home</ListItemText>
-          </ListItem>
-
-          <ListItem
-            button
-            component={Link}
-            to="/Grid"
-            onClick={onItemClick('Page 2')}
-          >
-            <ListItemText>Page 2</ListItemText>
-          </ListItem>
-
-          <ListItem button onClick={onItemClick('Page 3')}>
-            <ListItemText>Page 3</ListItemText>
-          </ListItem>
-        </List>
+    <div
+      className={classes.list}
+      role="presentation"
+      onClick={toggleDrawer(side, false)}
+      onKeyDown={toggleDrawer(side, false)}
+    >
+      <List>
         <Divider />
-      </div>
-    </Router>
+
+        <ListItem button component={Link} to="/" onClick={onItemClick('Home')}>
+          <ListItemIcon>
+            <DirectionsRunIcon />
+          </ListItemIcon>
+          <ListItemText>Customers</ListItemText>
+        </ListItem>
+
+        <ListItem
+          button
+          component={Link}
+          to="/Workouts"
+          onClick={onItemClick('Workouts')}
+        >
+          <ListItemIcon>
+            <DirectionsRunIcon />
+          </ListItemIcon>
+          <ListItemText>Workouts</ListItemText>
+        </ListItem>
+
+        <ListItem
+          button
+          component={Link}
+          to="/"
+          onClick={onItemClick('Calendar')}
+        >
+          <ListItemIcon>
+            <DirectionsRunIcon />
+          </ListItemIcon>
+          <ListItemText>Calendar</ListItemText>
+        </ListItem>
+
+        <ListItem
+          button
+          component={Link}
+          to="/"
+          onClick={onItemClick('Statistics')}
+        >
+          <ListItemIcon>
+            <DirectionsRunIcon />
+          </ListItemIcon>
+          <ListItemText>Statistics</ListItemText>
+        </ListItem>
+      </List>
+      <Divider />
+    </div>
   );
+
+  // JATKOKEHITYSTÄ...
 
   /* const fullList = side => (
     <div

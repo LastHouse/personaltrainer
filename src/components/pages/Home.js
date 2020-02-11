@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import DeleteCustomer from './actions/DeleteCustomer';
-import EditCustomer from './actions/EditCustomer';
+import DeleteCustomer from '../actions/DeleteCustomer';
+import EditCustomer from '../actions/EditCustomer';
 import IconButton from '@material-ui/core/IconButton';
 import AddBox from '@material-ui/icons/AddBox';
 

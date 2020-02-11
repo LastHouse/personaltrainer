@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-// import DeleteCustomer from './DeleteCustomer';
-// import EditCustomer from './EditCustomer';
-import DeleteWorkout from './actions/DeleteWorkout';
+import DeleteWorkout from '../actions/DeleteWorkout';
 import IconButton from '@material-ui/core/IconButton';
-import AddBox from '@material-ui/icons/AddBox';
+
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 export default function Workouts() {
-  const [customers, setCustomers] = useState([]);
+  //const [customers, setCustomers] = useState([]);
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => fetchData(), []);
 
   const fetchData = () => {
-    fetch('https://customerrest.herokuapp.com/api/customers')
+    fetch('https://customerrest.herokuapp.com/gettrainings')
       .then(response => response.json())
-      .then(data => setCustomers(data.content));
+      .then(data => setWorkouts(data));
   };
+
+  console.log(workouts);
 
   const deleteWorkout = link => {
     fetch(link, { method: 'DELETE' })
@@ -53,23 +55,18 @@ export default function Workouts() {
 
   const columns = [
     {
-      Header: '',
-      sortable: false,
-      filterable: false,
-      width: 50,
-      Cell: row => (
-        <IconButton workout={row.original}>
-          <AddBox />
-        </IconButton>
-      )
-    },
-    {
       Header: 'Activity',
       accessor: 'activity'
     },
     {
       Header: 'Date',
-      accessor: 'date'
+      accessor: 'date',
+
+      Cell: date => (
+        <div>
+          <Moment format="DD/MM/YYYY  HH:mm">{date.value}</Moment>
+        </div>
+      )
     },
     {
       Header: 'Duration (min)',
@@ -77,11 +74,7 @@ export default function Workouts() {
     },
     {
       Header: 'Customer',
-      accessor: 'firstname + lastname'
-    },
-    {
-      Header: 'Steet address',
-      accessor: 'streetaddress'
+      accessor: 'customer.firstname'
     },
 
     /* {
@@ -101,7 +94,7 @@ export default function Workouts() {
       sortable: false,
       filterable: false,
       width: 50,
-      accessor: 'links[2].href',
+      accessor: '',
       Cell: row => (
         <div>
           <DeleteWorkout deleteWorkout={deleteWorkout} workout={row.original} />
