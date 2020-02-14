@@ -56,7 +56,7 @@ export default function EditCustomer(props) {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">New Car</DialogTitle>
+        <DialogTitle id="form-dialog-title">Edit Customer</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus

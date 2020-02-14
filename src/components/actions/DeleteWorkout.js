@@ -12,6 +12,7 @@ export default function DeleteWorkout(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
+    console.log(props);
     setOpen(true);
   };
 
@@ -19,8 +20,10 @@ export default function DeleteWorkout(props) {
     setOpen(false);
   };
 
+  // EI TOIMI OIKEIN!!!
+
   const deleteWorkout = () => {
-    props.deleteWorkout(props.customer.links[2].href);
+    props.deleteWorkout(props.id);
     handleClose();
   };
 
@@ -41,8 +44,7 @@ export default function DeleteWorkout(props) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Do you really want to delet this customer & all workouts from the
-            database?
+            Do you really want to delete this workout from the database?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -50,7 +52,7 @@ export default function DeleteWorkout(props) {
             Cancel
           </Button>
           <Button
-            customer={props.row}
+            workout={props.row}
             onClick={deleteWorkout}
             color="primary"
             autoFocus

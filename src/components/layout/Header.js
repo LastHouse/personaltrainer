@@ -88,6 +88,18 @@ export default function Header() {
           <ListItemIcon>
             <DirectionsRunIcon />
           </ListItemIcon>
+          <ListItemText>Home</ListItemText>
+        </ListItem>
+
+        <ListItem
+          button
+          component={Link}
+          to="/Customers"
+          onClick={onItemClick('Customers')}
+        >
+          <ListItemIcon>
+            <DirectionsRunIcon />
+          </ListItemIcon>
           <ListItemText>Customers</ListItemText>
         </ListItem>
 
@@ -205,6 +217,7 @@ export default function Header() {
           <Typography className={classes.title} variant="h5" noWrap>
             Personal Trainer
           </Typography>
+
           <AddCustomer saveCustomer={saveCustomer} />
           <IconButton aria-label="search" color="inherit">
             <SearchIcon />

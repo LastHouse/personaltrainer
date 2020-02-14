@@ -1,29 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import DeleteWorkout from '../actions/DeleteWorkout';
 
-export default function Workouts() {
+export default function Customer(props) {
   const [workouts, setWorkouts] = useState([]);
 
-  useEffect(() => fetchAllWorkouts(), []);
-
-  // FETCH ALL WORKOUTS WITH CUSTOMER DATA
-
-  const fetchAllWorkouts = () => {
-    fetch('https://customerrest.herokuapp.com/gettrainings')
-      .then(response => response.json())
-      .then(data => setWorkouts(data));
-  };
-
-  // DELETE WON'T WORK FROM THIS ENDPOINT
-
-  const deleteWorkout = link => {
-    fetch(link, { method: 'DELETE' })
-      .then(response => fetchAllWorkouts())
-      .catch(err => console.error(err));
+  const showCustomerWorkouts = () => {
+    setWorkouts({
+      activity: props.customer.activity,
+      date: props.customer.date,
+      duration: props.customer.duration,
+      customer: props.customer
+    });
   };
 
   const columns = [
@@ -57,7 +48,7 @@ export default function Workouts() {
       accessor: 'workouts.id',
       Cell: row => (
         <div>
-          <DeleteWorkout deleteWorkout={deleteWorkout} workout={row.original} />
+          <DeleteWorkout workout={row.original} />
         </div>
       )
     }

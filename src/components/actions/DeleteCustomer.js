@@ -44,7 +44,7 @@ export default function DeleteCustomer(props) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Do you really want to delet this customer & all workouts from the
+            Do you really want to delete this customer & all workouts from the
             database?
           </DialogContentText>
         </DialogContent>
