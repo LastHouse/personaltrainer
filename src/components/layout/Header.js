@@ -118,7 +118,7 @@ export default function Header() {
         <ListItem
           button
           component={Link}
-          to="/"
+          to="/Calendar"
           onClick={onItemClick('Calendar')}
         >
           <ListItemIcon>

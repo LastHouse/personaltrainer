@@ -8,6 +8,9 @@ import DeleteWorkout from '../actions/DeleteWorkout';
 export default function Customer(props) {
   const [workouts, setWorkouts] = useState([]);
 
+  console.log(props);
+
+  /*
   const showCustomerWorkouts = () => {
     setWorkouts({
       activity: props.customer.activity,
@@ -16,6 +19,8 @@ export default function Customer(props) {
       customer: props.customer
     });
   };
+
+  */
 
   const columns = [
     {
@@ -56,7 +61,7 @@ export default function Customer(props) {
 
   return (
     <div>
-      <ReactTable filterable={true} data={workouts} columns={columns} />
+      <ReactTable filterable={false} data={workouts} columns={columns} />
     </div>
   );
 }

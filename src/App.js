@@ -5,6 +5,7 @@ import Home from './components/pages/Home';
 import Customers from './components/pages/Customers';
 import Workouts from './components/pages/Workouts';
 import Customer from './components/pages/Customer';
+import MyCalendar from './components/pages/MyCalendar';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/Customers" component={Customers} />
           <Route path="/Workouts" component={Workouts} />
           <Route path="/Customer" component={Customer} />
+          <Route path="/Calendar" component={MyCalendar} />
           <Route render={() => <h1>Page not found</h1>} />
         </Switch>
       </Router>

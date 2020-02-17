@@ -65,7 +65,7 @@ export default function Customers() {
       accessor: 'links[2].href',
       Cell: row => (
         <IconButton
-          customer={row.original}
+          workouts={row}
           component={Link}
           to="/Customer"
           onClick={onItemClick('Customer')}
