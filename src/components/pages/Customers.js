@@ -7,6 +7,7 @@ import AddWorkout from '../actions/AddWorkout';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Link } from 'react-router-dom';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export default function Customers() {
   const [title, setTitle] = useState('Home');
@@ -61,27 +62,29 @@ export default function Customers() {
       Header: '',
       sortable: false,
       filterable: false,
-      width: 50,
+      width: 60,
       accessor: 'links[2].href',
       Cell: row => (
-        <IconButton
-          workouts={row}
-          component={Link}
-          to={{
-            pathname: '/Customer',
-            props: { customer: { row } }
-          }}
-          onClick={onItemClick('Customer')}
-        >
-          <ArrowForwardIcon />
-        </IconButton>
+        <Tooltip title="Show Workouts">
+          <IconButton
+            workouts={row}
+            component={Link}
+            to={{
+              pathname: '/Customer',
+              props: { customer: { row } }
+            }}
+            onClick={onItemClick('Customer')}
+          >
+            <ArrowForwardIcon />
+          </IconButton>
+        </Tooltip>
       )
     },
     {
       Header: '',
       sortable: false,
       filterable: false,
-      width: 50,
+      width: 60,
       Cell: row => (
         <AddWorkout
           saveWorkout={saveWorkout}
@@ -122,7 +125,7 @@ export default function Customers() {
       Header: '',
       sortable: false,
       filterable: false,
-      width: 50,
+      width: 60,
       accessor: 'links[1].href',
       Cell: row => (
         <EditCustomer updateCustomer={updateCustomer} customer={row.original} />
@@ -132,7 +135,7 @@ export default function Customers() {
       Header: '',
       sortable: false,
       filterable: false,
-      width: 50,
+      width: 60,
       accessor: 'links[1].href',
       Cell: row => (
         <div>

@@ -15,6 +15,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 import AddCustomer from '../actions/AddCustomer';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import { Link } from 'react-router-dom';
 
@@ -44,8 +45,31 @@ const useStyles = makeStyles(theme => ({
   },
   fullList: {
     width: 'auto'
+  },
+  fab: {
+    margin: theme.spacing(1)
+  },
+  absolute: {
+    position: 'absolute',
+    bottom: theme.spacing(2),
+    right: theme.spacing(3)
   }
 }));
+
+// Tooltips for add customer & search?
+
+/*
+
+const AddCustomer = React.forwardRef(function AddCustomer(props, ref) {
+  //  Spread the props to the underlying DOM element.
+  return (
+    <div {...props} ref={ref}>
+      Bin
+    </div>
+  );
+});
+
+*/
 
 export default function Header() {
   const classes = useStyles();
@@ -143,41 +167,6 @@ export default function Header() {
     </div>
   );
 
-  // JATKOKEHITYSTÄ...
-
-  /* const fullList = side => (
-    <div
-      className={classes.fullList}
-      role="presentation"
-      onClick={toggleDrawer(side, false)}
-      onKeyDown={toggleDrawer(side, false)}
-    >
-      <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
-
-  */
-
   useEffect(() => fetchData(), []);
 
   const fetchData = () => {
@@ -217,11 +206,12 @@ export default function Header() {
           <Typography className={classes.title} variant="h5" noWrap>
             Personal Trainer
           </Typography>
-
           <AddCustomer saveCustomer={saveCustomer} />
-          <IconButton aria-label="search" color="inherit">
-            <SearchIcon />
-          </IconButton>
+          <Tooltip title="Search">
+            <IconButton aria-label="search" color="inherit">
+              <SearchIcon />
+            </IconButton>
+          </Tooltip>
         </Toolbar>
       </AppBar>
     </div>

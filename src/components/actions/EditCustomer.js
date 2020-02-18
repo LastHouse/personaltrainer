@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export default function EditCustomer(props) {
   const [open, setOpen] = React.useState(false);
@@ -48,9 +49,11 @@ export default function EditCustomer(props) {
 
   return (
     <div>
-      <IconButton onClick={() => handleClickOpen()}>
-        <EditIcon></EditIcon>
-      </IconButton>
+      <Tooltip title="Edit">
+        <IconButton onClick={() => handleClickOpen()}>
+          <EditIcon></EditIcon>
+        </IconButton>
+      </Tooltip>
       <Dialog
         open={open}
         onClose={handleClose}

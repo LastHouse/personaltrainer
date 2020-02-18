@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export default function DeleteWorkout(props) {
   const [open, setOpen] = React.useState(false);
@@ -29,10 +30,11 @@ export default function DeleteWorkout(props) {
 
   return (
     <div>
-      <IconButton onClick={() => handleClickOpen()}>
-        <DeleteIcon></DeleteIcon>
-      </IconButton>
-
+      <Tooltip title="Delete">
+        <IconButton onClick={() => handleClickOpen()}>
+          <DeleteIcon></DeleteIcon>
+        </IconButton>
+      </Tooltip>
       <Dialog
         open={open}
         onClose={handleClose}

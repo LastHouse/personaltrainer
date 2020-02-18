@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AddBox from '@material-ui/icons/AddBox';
 import DateFnsUtils from '@date-io/date-fns';
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export default function AddWorkout(props) {
   const [open, setOpen] = React.useState(false);
@@ -41,9 +42,11 @@ export default function AddWorkout(props) {
 
   return (
     <div>
-      <IconButton onClick={() => handleClickOpen()}>
-        <AddBox />
-      </IconButton>
+      <Tooltip title="Add Workout">
+        <IconButton onClick={() => handleClickOpen()}>
+          <AddBox />
+        </IconButton>
+      </Tooltip>
       <Dialog
         open={open}
         onClose={handleClose}

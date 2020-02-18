@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import AddBox from '@material-ui/icons/AddBox';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export default function AddCustomer(props) {
   const [open, setOpen] = React.useState(false);
@@ -39,9 +40,11 @@ export default function AddCustomer(props) {
 
   return (
     <div>
-      <IconButton onClick={() => handleClickOpen()}>
-        <AddBox></AddBox>
-      </IconButton>
+      <Tooltip title="Add Customer">
+        <IconButton onClick={() => handleClickOpen()}>
+          <AddBox></AddBox>
+        </IconButton>
+      </Tooltip>
       <Dialog
         open={open}
         onClose={handleClose}
