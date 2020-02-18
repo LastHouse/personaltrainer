@@ -20,7 +20,7 @@ export default function Customers() {
       .then(data => setCustomers(data.content));
   };
 
-  console.log(customers);
+  //console.log(customers);
 
   const deleteCustomer = link => {
     fetch(link, { method: 'DELETE' })
@@ -67,7 +67,10 @@ export default function Customers() {
         <IconButton
           workouts={row}
           component={Link}
-          to="/Customer"
+          to={{
+            pathname: '/Customer',
+            props: { customer: { row } }
+          }}
           onClick={onItemClick('Customer')}
         >
           <ArrowForwardIcon />
@@ -144,7 +147,12 @@ export default function Customers() {
 
   return (
     <div>
-      <ReactTable filterable={true} data={customers} columns={columns} />
+      <ReactTable
+        minRows={10}
+        filterable={true}
+        data={customers}
+        columns={columns}
+      />
     </div>
   );
 }

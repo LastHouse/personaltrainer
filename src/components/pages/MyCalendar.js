@@ -5,6 +5,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 // Setup the localizer by providing the moment (or globalize) Object
 // to the correct localizer.
+
 const localizer = momentLocalizer(moment); // or globalizeLocalizer
 
 const myEventsList = [
