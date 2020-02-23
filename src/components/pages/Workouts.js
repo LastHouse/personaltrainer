@@ -17,6 +17,8 @@ export default function Workouts() {
       .then(data => setWorkouts(data));
   };
 
+  console.log(workouts);
+
   const columns = [
     {
       Header: 'Activity',
@@ -37,8 +39,10 @@ export default function Workouts() {
       accessor: 'duration'
     },
     {
+      id: 'customer',
       Header: 'Customer',
-      accessor: 'customer.firstname'
+      accessor: customer =>
+        customer.customer.firstname + ' ' + customer.customer.lastname
     }
   ];
 

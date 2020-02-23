@@ -21,8 +21,6 @@ export default function Customers() {
       .then(data => setCustomers(data.content));
   };
 
-  //console.log(customers);
-
   const deleteCustomer = link => {
     fetch(link, { method: 'DELETE' })
       .then(response => fetchCustomers())

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Moment from 'react-moment';
@@ -15,19 +15,28 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+// TYHJÄ RESPONSE RENDERÖI PÄIVÄMÄÄRÄN JA LUO RIVIN!!!
+
 export default function Customer(props) {
   const [workouts, setWorkouts] = useState([]);
   const classes = useStyles();
 
-  useEffect(() => fetchCustomersWorkouts(), []);
+  const fetchCustomersWorkouts = useCallback(async () => {
+    const response = await fetch(
+      props.location.props.customer.row.original.links[2].href
+    );
+    const data = await response.json();
+    return setWorkouts(data.content);
+  }, [props.location.props.customer.row.original.links]);
+  useEffect(() => {
+    fetchCustomersWorkouts();
+  }, [fetchCustomersWorkouts]);
 
-  const fetchCustomersWorkouts = () => {
-    fetch(props.location.props.customer.row.original.links[2].href)
-      .then(response => response.json())
-      .then(data => setWorkouts(data.content));
+  const deleteWorkout = link => {
+    fetch(link, { method: 'DELETE' })
+      .then(response => fetchCustomersWorkouts())
+      .catch(err => console.error(err));
   };
-
-  //console.log(workouts);
 
   const workoutColumns = [
     {
@@ -47,21 +56,20 @@ export default function Customer(props) {
     {
       Header: 'Duration (min)',
       accessor: 'duration'
-    }
-    /*
+    },
+
     {
       Header: '',
       sortable: false,
       filterable: false,
       width: 50,
-      accessor: 'workouts.id',
+      accessor: 'links[1].href',
       Cell: row => (
         <div>
-          <DeleteWorkout workout={row.original} />
+          <DeleteWorkout deleteWorkout={deleteWorkout} workout={row.original} />
         </div>
       )
     }
-    */
   ];
 
   return (

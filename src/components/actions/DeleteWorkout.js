@@ -24,7 +24,7 @@ export default function DeleteWorkout(props) {
   // EI TOIMI OIKEIN!!!
 
   const deleteWorkout = () => {
-    props.deleteWorkout(props.id);
+    props.deleteWorkout(props.workout.links[1].href);
     handleClose();
   };
 

@@ -3,11 +3,11 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import Drawer from '@material-ui/core/Drawer';
-
+import InputBase from '@material-ui/core/InputBase';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
@@ -27,10 +27,10 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2)
   },
   toolbar: {
-    minHeight: 128,
+    //minHeight: 128,
     alignItems: 'flex-start',
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(2),
+    //paddingTop: theme.spacing(1),
+    //paddingBottom: theme.spacing(2),
     backgroundColor: '#d3d3d3',
     color: 'black',
     //textAlign: 'right',
@@ -43,9 +43,6 @@ const useStyles = makeStyles(theme => ({
   list: {
     width: 250
   },
-  fullList: {
-    width: 'auto'
-  },
   fab: {
     margin: theme.spacing(1)
   },
@@ -53,23 +50,45 @@ const useStyles = makeStyles(theme => ({
     position: 'absolute',
     bottom: theme.spacing(2),
     right: theme.spacing(3)
+  },
+  search: {
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+      backgroundColor: fade(theme.palette.common.white, 0.25)
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto'
+    }
+  },
+  searchIcon: {
+    width: theme.spacing(7),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  inputRoot: {
+    color: 'inherit'
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 7),
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: 120,
+      '&:focus': {
+        width: 200
+      }
+    }
   }
 }));
-
-// Tooltips for add customer & search?
-
-/*
-
-const AddCustomer = React.forwardRef(function AddCustomer(props, ref) {
-  //  Spread the props to the underlying DOM element.
-  return (
-    <div {...props} ref={ref}>
-      Bin
-    </div>
-  );
-});
-
-*/
 
 export default function Header() {
   const classes = useStyles();
@@ -136,7 +155,7 @@ export default function Header() {
           <ListItemIcon>
             <DirectionsRunIcon />
           </ListItemIcon>
-          <ListItemText>Workouts</ListItemText>
+          <ListItemText>All Workouts</ListItemText>
         </ListItem>
 
         <ListItem
@@ -207,11 +226,19 @@ export default function Header() {
             Personal Trainer
           </Typography>
           <AddCustomer saveCustomer={saveCustomer} />
-          <Tooltip title="Search">
-            <IconButton aria-label="search" color="inherit">
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
               <SearchIcon />
-            </IconButton>
-          </Tooltip>
+            </div>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </div>
         </Toolbar>
       </AppBar>
     </div>
