@@ -9,15 +9,11 @@ export default function Workouts() {
 
   useEffect(() => fetchAllWorkouts(), []);
 
-  // FETCH ALL WORKOUTS WITH CUSTOMER DATA
-
   const fetchAllWorkouts = () => {
     fetch('https://customerrest.herokuapp.com/gettrainings')
       .then(response => response.json())
       .then(data => setWorkouts(data));
   };
-
-  console.log(workouts);
 
   const columns = [
     {

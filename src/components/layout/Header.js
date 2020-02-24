@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,8 +14,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
-import AddCustomer from '../actions/AddCustomer';
-import Tooltip from '@material-ui/core/Tooltip';
 
 import { Link } from 'react-router-dom';
 
@@ -93,7 +91,6 @@ const useStyles = makeStyles(theme => ({
 export default function Header() {
   const classes = useStyles();
   const [title, setTitle] = useState('Home');
-  const [customers, setCustomers] = useState([]);
 
   const [state, setState] = React.useState({
     top: false,
@@ -149,6 +146,18 @@ export default function Header() {
         <ListItem
           button
           component={Link}
+          to="/CustomersMT"
+          onClick={onItemClick('CustomersMT')}
+        >
+          <ListItemIcon>
+            <DirectionsRunIcon />
+          </ListItemIcon>
+          <ListItemText>Customers MT</ListItemText>
+        </ListItem>
+
+        <ListItem
+          button
+          component={Link}
           to="/Workouts"
           onClick={onItemClick('Workouts')}
         >
@@ -173,7 +182,7 @@ export default function Header() {
         <ListItem
           button
           component={Link}
-          to="/"
+          to="/Statistics"
           onClick={onItemClick('Statistics')}
         >
           <ListItemIcon>
@@ -185,26 +194,6 @@ export default function Header() {
       <Divider />
     </div>
   );
-
-  useEffect(() => fetchData(), []);
-
-  const fetchData = () => {
-    fetch('https://customerrest.herokuapp.com/api/customers')
-      .then(response => response.json())
-      .then(data => setCustomers(data.content));
-  };
-
-  const saveCustomer = customer => {
-    fetch('https://customerrest.herokuapp.com/api/customers', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(customer)
-    })
-      .then(response => fetchData())
-      .catch(err => console.error(err));
-  };
 
   return (
     <div className={classes.root}>
@@ -225,7 +214,7 @@ export default function Header() {
           <Typography className={classes.title} variant="h5" noWrap>
             Personal Trainer
           </Typography>
-          <AddCustomer saveCustomer={saveCustomer} />
+
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />

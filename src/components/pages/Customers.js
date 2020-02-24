@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
+import AddCustomer from '../actions/AddCustomer';
 import DeleteCustomer from '../actions/DeleteCustomer';
 import EditCustomer from '../actions/EditCustomer';
 import AddWorkout from '../actions/AddWorkout';
@@ -8,10 +9,25 @@ import IconButton from '@material-ui/core/IconButton';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Link } from 'react-router-dom';
 import Tooltip from '@material-ui/core/Tooltip';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
+    color: theme.palette.text.secondary
+  }
+}));
 
 export default function Customers() {
   const [title, setTitle] = useState('Home');
   const [customers, setCustomers] = useState([]);
+  const classes = useStyles();
 
   useEffect(() => fetchCustomers(), []);
 
@@ -46,6 +62,18 @@ export default function Customers() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(workout)
+    })
+      .then(response => fetchCustomers())
+      .catch(err => console.error(err));
+  };
+
+  const saveCustomer = customer => {
+    fetch('https://customerrest.herokuapp.com/api/customers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(customer)
     })
       .then(response => fetchCustomers())
       .catch(err => console.error(err));
@@ -147,13 +175,22 @@ export default function Customers() {
   ];
 
   return (
-    <div>
-      <ReactTable
-        minRows={10}
-        filterable={true}
-        data={customers}
-        columns={columns}
-      />
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <AddCustomer saveCustomer={saveCustomer} />
+          </Paper>
+        </Grid>
+        <Grid item xs={12}>
+          <ReactTable
+            minRows={10}
+            filterable={true}
+            data={customers}
+            columns={columns}
+          />
+        </Grid>
+      </Grid>
     </div>
   );
 }
