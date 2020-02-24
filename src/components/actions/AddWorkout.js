@@ -14,7 +14,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 export default function AddWorkout(props) {
   const [open, setOpen] = React.useState(false);
   const [workout, setWorkouts] = React.useState({
-    date: new Date(),
+    date: '',
     duration: '',
     activity: '',
     customer: props.customer.links[1].href
@@ -30,7 +30,11 @@ export default function AddWorkout(props) {
   };
 
   const handleInputChange = e => {
-    setWorkouts({ ...workout, [e.target.name]: e.target.value });
+    setWorkouts({
+      ...workout,
+      [e.target.name]: e.target.value,
+      date: selectedDate
+    });
   };
 
   const addWorkout = () => {
