@@ -3,8 +3,16 @@ import ReactTable from 'react-table';
 import 'react-table/react-table.css';
 import Moment from 'react-moment';
 import 'moment-timezone';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    textAlign: 'center'
+  }
+}));
 
 export default function Workouts() {
+  const classes = useStyles();
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => fetchAllWorkouts(), []);
@@ -43,7 +51,7 @@ export default function Workouts() {
   ];
 
   return (
-    <div>
+    <div className={classes.root}>
       <ReactTable
         minRows={10}
         filterable={true}

@@ -3,18 +3,16 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import Drawer from '@material-ui/core/Drawer';
-import InputBase from '@material-ui/core/InputBase';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
-
+import AddCustomer from '../actions/AddCustomer';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -22,74 +20,39 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1
   },
   menuButton: {
+    paddingTop: theme.spacing(2),
     marginRight: theme.spacing(2)
   },
   toolbar: {
-    //minHeight: 128,
     alignItems: 'flex-start',
-    //paddingTop: theme.spacing(1),
-    //paddingBottom: theme.spacing(2),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
     backgroundColor: '#d3d3d3',
-    color: 'black',
-    //textAlign: 'right',
-    justifyContent: 'center'
+    color: 'black'
   },
   title: {
+    alignItems: 'right',
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
     flexGrow: 1,
-    alignSelf: 'flex-end'
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block'
+    }
   },
   list: {
     width: 250
   },
   fab: {
     margin: theme.spacing(1)
-  },
-  absolute: {
-    position: 'absolute',
-    bottom: theme.spacing(2),
-    right: theme.spacing(3)
-  },
-  search: {
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: fade(theme.palette.common.white, 0.15),
-    '&:hover': {
-      backgroundColor: fade(theme.palette.common.white, 0.25)
-    },
-    marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      marginLeft: theme.spacing(1),
-      width: 'auto'
-    }
-  },
-  searchIcon: {
-    width: theme.spacing(7),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  inputRoot: {
-    color: 'inherit'
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: 120,
-      '&:focus': {
-        width: 200
-      }
-    }
   }
 }));
 
 export default function Header() {
   const classes = useStyles();
+  const [customers, setCustomers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const [title, setTitle] = useState('Home');
 
   const [state, setState] = React.useState({
@@ -112,6 +75,26 @@ export default function Header() {
 
   const onItemClick = title => () => {
     setTitle(title);
+  };
+
+  const saveCustomer = customer => {
+    fetch('https://customerrest.herokuapp.com/api/customers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(customer)
+    })
+      .then(response => fetchCustomers())
+      .catch(err => console.error(err));
+  };
+
+  const fetchCustomers = () => {
+    setIsLoading(true);
+    fetch('https://customerrest.herokuapp.com/api/customers')
+      .then(response => response.json())
+      .then(data => setCustomers(data.content));
+    setIsLoading(false);
   };
 
   const sideList = side => (
@@ -141,18 +124,6 @@ export default function Header() {
             <DirectionsRunIcon />
           </ListItemIcon>
           <ListItemText>Customers</ListItemText>
-        </ListItem>
-
-        <ListItem
-          button
-          component={Link}
-          to="/CustomersMT"
-          onClick={onItemClick('CustomersMT')}
-        >
-          <ListItemIcon>
-            <DirectionsRunIcon />
-          </ListItemIcon>
-          <ListItemText>Customers MT</ListItemText>
         </ListItem>
 
         <ListItem
@@ -211,23 +182,14 @@ export default function Header() {
           <Drawer open={state.left} onClose={toggleDrawer('left', false)}>
             {sideList('left')}
           </Drawer>
-          <Typography className={classes.title} variant="h5" noWrap>
+          <Typography className={classes.title} variant="h4">
             Personal Trainer
           </Typography>
-
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
+          {isLoading ? (
+            <div>Loading ...</div>
+          ) : (
+            <AddCustomer saveCustomer={saveCustomer} />
+          )}
         </Toolbar>
       </AppBar>
     </div>

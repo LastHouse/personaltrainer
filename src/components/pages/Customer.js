@@ -9,9 +9,14 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    ...theme.typography.button,
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    flexGrow: 1,
+    textAlign: 'center'
+  },
+  paper: {
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary
   }
 }));
 
@@ -73,13 +78,11 @@ export default function Customer(props) {
   ];
 
   return (
-    <div>
-      <div className={classes.root}>
-        {'These are '}
-        {props.location.props.customer.row.original.firstname}{' '}
-        {props.location.props.customer.row.original.lastname}
-        {"'s workouts"}
-      </div>
+    <div className={classes.root}>
+      {'These are '}
+      {props.location.props.customer.row.original.firstname}{' '}
+      {props.location.props.customer.row.original.lastname}
+      {"'s workouts"}
       <Divider />
       <ReactTable
         minRows={10}

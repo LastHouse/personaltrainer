@@ -1,11 +1,6 @@
 import React from 'react';
-
-import 'react-table/react-table.css';
+import './Home.css';
 
 export default function Home() {
-  return (
-    <div>
-      <h1>Tervetuloa!</h1>
-    </div>
-  );
+  return <div className="Home"> </div>;
 }
