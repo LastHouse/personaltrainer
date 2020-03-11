@@ -9,12 +9,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(1),
     flexGrow: 1,
     textAlign: 'center'
   },
   paper: {
-    padding: theme.spacing(1),
     textAlign: 'center',
     color: theme.palette.text.secondary
   }
@@ -31,11 +29,14 @@ export default function Customer(props) {
       props.location.props.customer.row.original.links[2].href
     );
     const data = await response.json();
+
     return setWorkouts(data.content);
   }, [props.location.props.customer.row.original.links]);
   useEffect(() => {
     fetchCustomersWorkouts();
   }, [fetchCustomersWorkouts]);
+
+  //   if (data.content.activity != null) {}
 
   const deleteWorkout = link => {
     fetch(link, { method: 'DELETE' })
@@ -46,11 +47,21 @@ export default function Customer(props) {
   const workoutColumns = [
     {
       Header: 'Activity',
-      accessor: 'activity'
+      accessor: 'activity',
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }
     },
     {
       Header: 'Date',
       accessor: 'date',
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      },
 
       Cell: date => (
         <div>
@@ -60,7 +71,12 @@ export default function Customer(props) {
     },
     {
       Header: 'Duration (min)',
-      accessor: 'duration'
+      accessor: 'duration',
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }
     },
 
     {
@@ -79,10 +95,13 @@ export default function Customer(props) {
 
   return (
     <div className={classes.root}>
-      {'These are '}
-      {props.location.props.customer.row.original.firstname}{' '}
-      {props.location.props.customer.row.original.lastname}
-      {"'s workouts"}
+      <h4>
+        {' '}
+        {'These are '}
+        {props.location.props.customer.row.original.firstname}{' '}
+        {props.location.props.customer.row.original.lastname}
+        {"'s workouts"}
+      </h4>
       <Divider />
       <ReactTable
         minRows={10}

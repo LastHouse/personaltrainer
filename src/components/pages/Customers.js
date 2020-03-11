@@ -109,31 +109,66 @@ export default function Customers() {
     },
     {
       Header: 'First name',
-      accessor: 'firstname'
+      accessor: 'firstname',
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }
     },
     {
       Header: 'Last name',
-      accessor: 'lastname'
+      accessor: 'lastname',
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }
     },
     {
       Header: 'Email',
-      accessor: 'email'
+      accessor: 'email',
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }
     },
     {
       Header: 'Phone',
-      accessor: 'phone'
+      accessor: 'phone',
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }
     },
     {
       Header: 'Steet address',
-      accessor: 'streetaddress'
+      accessor: 'streetaddress',
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }
     },
     {
       Header: 'Postcode',
-      accessor: 'postcode'
+      accessor: 'postcode',
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }
     },
     {
       Header: 'City',
-      accessor: 'city'
+      accessor: 'city',
+      style: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center'
+      }
     },
     {
       Header: '',
