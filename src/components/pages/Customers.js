@@ -4,10 +4,7 @@ import 'react-table/react-table.css';
 import DeleteCustomer from '../actions/DeleteCustomer';
 import EditCustomer from '../actions/EditCustomer';
 import AddWorkout from '../actions/AddWorkout';
-import IconButton from '@material-ui/core/IconButton';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import { Link } from 'react-router-dom';
-import Tooltip from '@material-ui/core/Tooltip';
+import CustomerWorkouts from '../actions/CustomerWorkouts';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
@@ -22,7 +19,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Customers() {
-  const [title, setTitle] = useState('Home');
   const [customers, setCustomers] = useState([]);
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
@@ -67,10 +63,6 @@ export default function Customers() {
       .catch(err => console.error(err));
   };
 
-  const onItemClick = title => () => {
-    setTitle(title);
-  };
-
   const columns = [
     {
       Header: '',
@@ -78,21 +70,7 @@ export default function Customers() {
       filterable: false,
       width: 60,
       accessor: 'links[2].href',
-      Cell: row => (
-        <Tooltip title="Show Workouts">
-          <IconButton
-            workouts={row}
-            component={Link}
-            to={{
-              pathname: '/Customer',
-              props: { customer: { row } }
-            }}
-            onClick={onItemClick('Customer')}
-          >
-            <ArrowForwardIcon />
-          </IconButton>
-        </Tooltip>
-      )
+      Cell: row => <CustomerWorkouts customer={row.original} />
     },
     {
       Header: '',

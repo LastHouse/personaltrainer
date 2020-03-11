@@ -103,6 +103,7 @@ export default function Customer(props) {
         {"'s workouts"}
       </h4>
       <Divider />
+
       <ReactTable
         minRows={10}
         filterable={false}
