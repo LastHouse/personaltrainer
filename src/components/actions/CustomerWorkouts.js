@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import ReactTable from 'react-table';
 import 'react-table/react-table.css';
-import Moment from 'react-moment';
+import moment from 'moment/moment.js';
 import 'moment-timezone';
 import DeleteWorkout from '../actions/DeleteWorkout';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -32,11 +31,11 @@ export default function CustomerWorkouts(props) {
   const [workouts, setWorkouts] = useState([]);
   const classes = useStyles();
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleClickOpen = () => {
+    console.log(workouts[0].activity);
+
     setOpen(true);
-    console.log(props);
   };
 
   const handleClose = () => {
@@ -72,22 +71,15 @@ export default function CustomerWorkouts(props) {
       }
     },
     {
+      id: 'date',
       Header: 'Date',
-      accessor: 'date',
+      accessor: row =>
+        row.date === null ? '' : moment(row.date).format('DD/MM/YYYY  HH:mm'),
       style: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center'
-      },
-
-      Cell: row =>
-        'duration' !== '' ? (
-          <div>
-            <Moment format="DD/MM/YYYY  HH:mm">{workouts.date}</Moment>
-          </div>
-        ) : (
-          ' '
-        )
+      }
     },
 
     {
@@ -114,46 +106,30 @@ export default function CustomerWorkouts(props) {
     }
   ];
 
-  if (props.workouts !== null) {
-    return (
-      <div>
-        <Tooltip title="Show Workouts">
-          <IconButton onClick={() => handleClickOpen()}>
-            <ArrowForwardIcon></ArrowForwardIcon>
-          </IconButton>
-        </Tooltip>
-
-        <Dialog
-          fullScreen={fullScreen}
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">
-            {' '}
-            {'These are '}
-            {props.customer.firstname} {props.customer.lastname}
-            {"'s workouts"}
-          </DialogTitle>
-          <DialogContent>
-            <div className={classes.root}>
-              <ReactTable
-                minRows={10}
-                filterable={false}
-                data={workouts}
-                columns={workoutColumns}
-              />
-            </div>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
-    );
+  function Content({ list }) {
+    if (!list) {
+      return null;
+    }
+    if (list[0].activity === undefined) {
+      return (
+        <div className={classes.root}>
+          <p>Nothing here...</p>
+        </div>
+      );
+    } else {
+      return (
+        <div className={classes.root}>
+          <ReactTable
+            minRows={3}
+            filterable={false}
+            data={workouts}
+            columns={workoutColumns}
+          />
+        </div>
+      );
+    }
   }
+
   return (
     <div>
       <Tooltip title="Show Workouts">
@@ -161,9 +137,9 @@ export default function CustomerWorkouts(props) {
           <ArrowForwardIcon></ArrowForwardIcon>
         </IconButton>
       </Tooltip>
-
       <Dialog
-        fullScreen={fullScreen}
+        fullWidth={true}
+        maxWidth={'md'}
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
@@ -175,11 +151,11 @@ export default function CustomerWorkouts(props) {
           {"'s workouts"}
         </DialogTitle>
         <DialogContent>
-          <h4>Customer has no workouts to show</h4>
+          <Content list={workouts} />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
-            Cancel
+            Exit
           </Button>
         </DialogActions>
       </Dialog>
