@@ -77,7 +77,7 @@ export default function AddWorkout(props) {
             name="duration"
             value={workout.duration}
             onChange={e => handleInputChange(e)}
-            label="Duration"
+            label="Duration in minutes"
             fullWidth
           />
           <TextField
