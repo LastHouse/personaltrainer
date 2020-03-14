@@ -7,15 +7,15 @@ The task given was: Personal Trainer company needs front end app for their custo
 The App includes the following features and functionalities:
 
 - Sorting and searching on customer and workouts pages
-- CRUD functions to Add  & Edit Customer, Delete existing customer (with confirmation dialog), Add training to customer, Delete training from any customer (with confirmation dialog)
+- CRUD functions to Add & Edit Customer, Delete existing customer (with confirmation dialog), Add training to customer, Delete training from any customer (with confirmation dialog)
 - Calendar page where personal trainer can see all trainings (monthly, weekly, daily).
 - Statistics page where user can see the amount of minutes by different activities. The stats are listed and also shown combined by activity type in a pie chart.
 
-The App implements features from Moments.js, React-Table, Material-UI & ReCharts.js.
+The App implements features from Moments.js, React-Table, Material-UI, loDash.js & ReCharts.js.
 
 I know that this will not win any design awards, but overall it works nicely. I could work more on CSS and maybe change the React-Table from v6 to v7 in the future.
 
-***
+---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
