@@ -4,8 +4,10 @@ import 'react-table/react-table.css';
 import DeleteCustomer from '../actions/DeleteCustomer';
 import EditCustomer from '../actions/EditCustomer';
 import AddWorkout from '../actions/AddWorkout';
+import AddCustomer from '../actions/AddCustomer';
 import CustomerWorkouts from '../actions/CustomerWorkouts';
 import { makeStyles } from '@material-ui/core/styles';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,22 +17,22 @@ const useStyles = makeStyles(theme => ({
   paper: {
     textAlign: 'center',
     color: theme.palette.text.secondary
+  },
+  divider: {
+    textAlign: 'left'
   }
 }));
 
 export default function Customers() {
   const [customers, setCustomers] = useState([]);
   const classes = useStyles();
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => fetchCustomers(), []);
 
   const fetchCustomers = () => {
-    setLoading(true);
     fetch('https://customerrest.herokuapp.com/api/customers')
       .then(response => response.json())
       .then(data => setCustomers(data.content));
-    setLoading(false);
   };
 
   const deleteCustomer = link => {
@@ -58,6 +60,18 @@ export default function Customers() {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(workout)
+    })
+      .then(response => fetchCustomers())
+      .catch(err => console.error(err));
+  };
+
+  const saveCustomer = customer => {
+    fetch('https://customerrest.herokuapp.com/api/customers', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(customer)
     })
       .then(response => fetchCustomers())
       .catch(err => console.error(err));
@@ -177,8 +191,11 @@ export default function Customers() {
 
   return (
     <div className={classes.root}>
+      <div className={classes.divider}>
+        <AddCustomer saveCustomer={saveCustomer} />
+      </div>
+      <Divider />
       <ReactTable
-        loading={loading}
         minRows={10}
         filterable={true}
         data={customers}

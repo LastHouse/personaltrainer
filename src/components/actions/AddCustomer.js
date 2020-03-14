@@ -10,7 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   button: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(1),
     margin: theme.spacing(1)
   }
 }));
@@ -49,13 +49,13 @@ export default function AddCustomer(props) {
     <div>
       <Button
         onClick={() => handleClickOpen()}
-        variant="contained"
-        color="secondary"
+        color="primary"
         size="small"
         className={classes.button}
         startIcon={<AddBox />}
+        disableElevation
       >
-        Add New Customer
+        Add Customer
       </Button>
 
       <Dialog

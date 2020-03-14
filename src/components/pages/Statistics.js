@@ -2,9 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { PieChart, Pie, Tooltip, Cell } from 'recharts';
 import _ from 'lodash';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import moment from 'moment/moment.js';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,7 +24,19 @@ const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(4),
     elevation: 0,
     spacing: 4,
+    alignContent: 'stretch',
+    textAlign: 'center'
+    //color: theme.palette.text.secondary
+  },
+  table: {
+    margin: 2,
+    padding: theme.spacing(2),
+    paddingRight: theme.spacing(4),
+    paddingLeft: theme.spacing(4),
+    elevation: 0,
+    spacing: 4,
     alignContent: 'center',
+    alignItems: 'stretch',
     textAlign: 'center',
     color: theme.palette.text.secondary
   },
@@ -124,37 +142,53 @@ export default function Statistics() {
         alignItems="flex-start"
       >
         <Grid item xs sm={8}>
-          <Paper className={classes.text}>
+          <div className={classes.text}>
             <h1>Stats</h1>
             <p>
-              On the right you can see a pie cahart of your upcoming activities.{' '}
+              On the right you can see a pie cahart of your upcoming activities
+              combined by type. <br></br>
               <br></br>
-              <br></br>
-              By hovering over the chart you can see activity minutes by
+              By hovering over the chart you can see total activity minutes per
               activity type.
             </p>
-            <Divider />
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sapiente
-              dicta illo, esse tenetur ea itaque rem quos. Suscipit ducimus
-              excepturi ea ratione. Fugit dolorum obcaecati omnis at quam ullam
-              nam aut quis eligendi, neque ad, consequuntur, eaque modi! Odio
-              voluptatibus, voluptatem libero itaque quas maiores, doloribus
-              consequuntur sit qui quasi hic dolor, vitae ea a provident
-              assumenda? Hic harum nobis asperiores inventore itaque ab culpa
-              deserunt debitis, maxime, nemo ad nesciunt odio minus, sequi
-              corporis consectetur? Nam vitae facilis cumque quis molestiae
-              accusantium culpa expedita officiis impedit repudiandae a,
-              consequuntur sint, explicabo facere ipsa atque enim neque. Itaque
-              eaque iusto hic optio dignissimos. Minima quae aperiam labore
-              aliquid. Quae illo cum, non dolorem saepe doloribus aliquid totam.
-            </p>
-            <Divider />
-          </Paper>
+          </div>
+          <Divider />
+          <h2> Workouts</h2>
+          <Divider />
+          <TableContainer>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Activity</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Duration (minutes)</TableCell>
+                  <TableCell>Customer</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {workouts.map(row => (
+                  <TableRow key={row.activity}>
+                    <TableCell component="th" scope="row">
+                      {row.activity}
+                    </TableCell>
+
+                    <TableCell>
+                      {moment(row.date).format('DD/MM/YYYY HH:mm')}
+                    </TableCell>
+                    <TableCell>{row.duration}</TableCell>
+                    <TableCell>
+                      {row.customer.firstname} {row.customer.lastname}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Divider />
         </Grid>
 
         <Grid item xs={12} sm={4}>
-          <Paper className={classes.pie}>
+          <div className={classes.pie}>
             <PieChart width={400} height={400}>
               <Tooltip />
               <Pie
@@ -175,7 +209,7 @@ export default function Statistics() {
                 ))}
               </Pie>
             </PieChart>
-          </Paper>
+          </div>
         </Grid>
       </Grid>
     </div>

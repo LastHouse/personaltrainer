@@ -12,7 +12,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
-import AddCustomer from '../actions/AddCustomer';
+
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -31,7 +31,6 @@ const useStyles = makeStyles(theme => ({
     color: 'black'
   },
   title: {
-    alignItems: 'right',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
     flexGrow: 1,
@@ -50,11 +49,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Header() {
   const classes = useStyles();
-  const [customers, setCustomers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
   const [title, setTitle] = useState('Home');
-
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -75,26 +70,6 @@ export default function Header() {
 
   const onItemClick = title => () => {
     setTitle(title);
-  };
-
-  const saveCustomer = customer => {
-    fetch('https://customerrest.herokuapp.com/api/customers', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(customer)
-    })
-      .then(response => fetchCustomers())
-      .catch(err => console.error(err));
-  };
-
-  const fetchCustomers = () => {
-    setIsLoading(true);
-    fetch('https://customerrest.herokuapp.com/api/customers')
-      .then(response => response.json())
-      .then(data => setCustomers(data.content));
-    setIsLoading(false);
   };
 
   const sideList = side => (
@@ -185,11 +160,6 @@ export default function Header() {
           <Typography className={classes.title} variant="h4">
             Personal Trainer
           </Typography>
-          {isLoading ? (
-            <div>Loading ...</div>
-          ) : (
-            <AddCustomer saveCustomer={saveCustomer} />
-          )}
         </Toolbar>
       </AppBar>
     </div>

@@ -13,7 +13,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import Tooltip from '@material-ui/core/Tooltip';
-import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,17 +28,23 @@ const useStyles = makeStyles(theme => ({
 export default function CustomerWorkouts(props) {
   const [open, setOpen] = React.useState(false);
   const [workouts, setWorkouts] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const classes = useStyles();
-  const theme = useTheme();
 
   const handleClickOpen = () => {
-    console.log(workouts[0].activity);
-
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  useEffect(() => fetchCustomers(), []);
+
+  const fetchCustomers = () => {
+    fetch('https://customerrest.herokuapp.com/api/customers')
+      .then(response => response.json())
+      .then(data => setCustomers(data.content));
   };
 
   const fetchCustomersWorkouts = useCallback(async () => {
@@ -114,6 +119,7 @@ export default function CustomerWorkouts(props) {
       return (
         <div className={classes.root}>
           <p>Nothing here...</p>
+          <p> You better contact customer and make an appointment</p>
         </div>
       );
     } else {
