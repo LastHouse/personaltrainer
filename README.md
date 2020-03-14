@@ -15,6 +15,9 @@ The App implements features from Moments.js, React-Table, Material-UI, loDash.js
 
 I know that this will not win any design awards, but overall it works nicely. I could work more on CSS and maybe change the React-Table from v6 to v7 in the future.
 
+The App is also running on Heroku, so you can go and check it out.
+[Personal Trainer APP](https://lasthouse-pt-app.herokuapp.com)
+
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

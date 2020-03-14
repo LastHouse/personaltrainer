@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import moment from 'moment/moment.js';
 import Grid from '@material-ui/core/Grid';
 import Divider from '@material-ui/core/Divider';
+import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -18,25 +19,17 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   text: {
-    margin: 2,
-    padding: theme.spacing(2),
     paddingRight: theme.spacing(4),
     paddingLeft: theme.spacing(4),
+    paddingBottom: theme.spacing(2),
     elevation: 0,
     spacing: 4,
     alignContent: 'stretch',
-    textAlign: 'center'
-    //color: theme.palette.text.secondary
+    textAlign: 'center',
+    color: theme.palette.text.secondary
   },
   table: {
-    margin: 2,
-    padding: theme.spacing(2),
-    paddingRight: theme.spacing(4),
-    paddingLeft: theme.spacing(4),
-    elevation: 0,
-    spacing: 4,
-    alignContent: 'center',
-    alignItems: 'stretch',
+    minWidth: 650,
     textAlign: 'center',
     color: theme.palette.text.secondary
   },
@@ -142,8 +135,8 @@ export default function Statistics() {
         alignItems="flex-start"
       >
         <Grid item xs sm={8}>
+          <h1>Stats</h1>
           <div className={classes.text}>
-            <h1>Stats</h1>
             <p>
               On the right you can see a pie cahart of your upcoming activities
               combined by type. <br></br>
@@ -159,24 +152,24 @@ export default function Statistics() {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow>
-                  <TableCell>Activity</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Duration (minutes)</TableCell>
-                  <TableCell>Customer</TableCell>
+                  <TableCell align="center">Activity</TableCell>
+                  <TableCell align="center">Date</TableCell>
+                  <TableCell align="center">Duration (minutes)</TableCell>
+                  <TableCell align="center">Customer</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {workouts.map(row => (
                   <TableRow key={row.activity}>
-                    <TableCell component="th" scope="row">
+                    <TableCell align="center" component="th" scope="row">
                       {row.activity}
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell align="center">
                       {moment(row.date).format('DD/MM/YYYY HH:mm')}
                     </TableCell>
-                    <TableCell>{row.duration}</TableCell>
-                    <TableCell>
+                    <TableCell align="center">{row.duration}</TableCell>
+                    <TableCell align="center">
                       {row.customer.firstname} {row.customer.lastname}
                     </TableCell>
                   </TableRow>
