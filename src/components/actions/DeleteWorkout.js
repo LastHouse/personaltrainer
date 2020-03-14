@@ -13,7 +13,6 @@ export default function DeleteWorkout(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
-    console.log(props);
     setOpen(true);
   };
 
